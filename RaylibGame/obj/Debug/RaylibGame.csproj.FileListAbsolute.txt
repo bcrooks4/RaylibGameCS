@@ -1,0 +1,12 @@
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\bin\Debug\RaylibGame.exe.config
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\bin\Debug\RaylibGame.exe
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\bin\Debug\RaylibGame.pdb
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\bin\Debug\Raylib-cs.dll
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\obj\Debug\RaylibGame.csprojAssemblyReference.cache
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\obj\Debug\RaylibGame.exe.config
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\obj\Debug\RaylibGame.csproj.CoreCompileInputs.cache
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\obj\Debug\RaylibGame.csproj.CopyComplete
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\obj\Debug\RaylibGame.exe
+C:\Users\Bill\RiderProjects\RaylibGame\RaylibGame\obj\Debug\RaylibGame.pdb
