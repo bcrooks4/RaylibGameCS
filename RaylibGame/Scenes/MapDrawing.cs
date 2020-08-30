@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
 using Color = Raylib_cs.Color;
 
 namespace RaylibGame.Scenes {
+    public enum DistanceMethod {
+        Euclidean,
+        Manhattan,
+    }
+    
     public class MapDrawing : IScene {
         private int[] _inputMap;
         private int _width;
@@ -217,14 +224,42 @@ namespace RaylibGame.Scenes {
             }
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER)) {
+                File.Delete("export.png");
+                
+                Random random = new Random();
                 Bitmap bitmap = new Bitmap(_width * _textureScale, _height * _textureScale);
 
+                Vector2[] cellPositions = new Vector2[_width * _height];
+                System.Drawing.Color[] cellColours = new System.Drawing.Color[_width * _height];
+                for (int y = 0; y < _height; y++) {
+                    for (int x = 0; x < _width; x++) {
+                        cellPositions[y * _width + x] = new Vector2(
+                            x * _textureScale + random.Next() % _textureScale,
+                            y * _textureScale + random.Next() % _textureScale);
+
+                        cellColours[y * _width + x] = _inputMap[y * _width + x] == 1
+                            ? System.Drawing.Color.GreenYellow
+                            : System.Drawing.Color.CornflowerBlue;
+                    }
+                }
+                
                 for (int y = 0; y < _height * _textureScale; y++) {
                     for (int x = 0; x < _width * _textureScale; x++) {
-                        bitmap.SetPixel(x, y, 
-                            _inputMap[y / _textureScale * _width + x / _textureScale] == 1 ? 
-                            System.Drawing.Color.LawnGreen :  
-                            System.Drawing.Color.CornflowerBlue);
+                        
+                        System.Drawing.Color colour = new System.Drawing.Color();
+                        float closestDistance = float.MaxValue;
+                        int closestIndex = 0;
+
+                        for (int i = 0; i < cellPositions.Length; i++) {
+                            float distance = GetDistance(new Vector2(x, y), cellPositions[i], DistanceMethod.Manhattan);
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestIndex = i;
+                            }
+                        }
+
+                        colour = cellColours[closestIndex];
+                        bitmap.SetPixel(x, y, colour);
                     }
                 }
                 
@@ -261,6 +296,18 @@ namespace RaylibGame.Scenes {
 
         public ReturnActions Close() {
             return ReturnActions.ReturnNull;
+        }
+
+        public float GetDistance(Vector2 a, Vector2 b, DistanceMethod distanceMethod) {
+            if (distanceMethod == DistanceMethod.Euclidean) {
+                return Vector2.DistanceSquared(a, b);
+            }
+            else {
+                float x = Math.Abs(a.X - b.X);
+                float y = Math.Abs(a.Y - b.Y);
+                float dist = x + y;
+                return dist;
+            }
         }
     }
 }
