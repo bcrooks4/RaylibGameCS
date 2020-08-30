@@ -47,6 +47,7 @@ namespace RaylibGame.Scenes {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER)) {
                 switch (_menuButtons[_highlightedButton].ButtonAction) {
                     case 0:
+                        Game.ChangeScene(new MapDrawing());
                         break;
                     case 1:
                         break;
