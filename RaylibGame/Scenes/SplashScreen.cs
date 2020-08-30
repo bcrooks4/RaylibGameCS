@@ -6,10 +6,11 @@ namespace RaylibGame.Scenes {
         private int _frame;
         private float _alpha;
         
-        public void Start() {
+        public ReturnActions Start() {
+            return ReturnActions.ReturnNull;
         }
 
-        public void Update() {
+        public ReturnActions Update() {
             _frame++;
             
             if (_frame > 60) {
@@ -22,9 +23,10 @@ namespace RaylibGame.Scenes {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) {
                 Game.ChangeScene(new MainMenu());
             }
+            return ReturnActions.ReturnNull;
         }
 
-        public void Render() {
+        public ReturnActions Render() {
             Raylib.ClearBackground(Color.RAYWHITE);
             
             Raylib.DrawRectangle(Raylib.GetScreenWidth()/2 - 128, Raylib.GetScreenHeight()/2 - 128, 256, 256, Color.BLACK);
@@ -32,9 +34,11 @@ namespace RaylibGame.Scenes {
             Raylib.DrawText("raylib", Raylib.GetScreenWidth()/2 - 44, Raylib.GetScreenHeight()/2 + 48, 50, Color.BLACK);
             
             Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color((byte)0, (byte)0, (byte)0, (byte)(255 * _alpha)));
+            return ReturnActions.ReturnNull;
         }
 
-        public void Close() {
+        public ReturnActions Close() {
+            return ReturnActions.ReturnNull;
         }
     }
 }

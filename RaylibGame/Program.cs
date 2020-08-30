@@ -5,14 +5,15 @@ using RaylibGame.Scenes;
 namespace RaylibGame {
     internal class Program {
         public static void Main(string[] args) {
-
             Game game = new Game();
             
             game.Start();
             
             while (!Raylib.WindowShouldClose()) {
-                game.Update();
-                game.Render();
+                if (game.Update()) 
+                    break;
+                if (game.Render()) 
+                    break;
             }
             
             game.Close();

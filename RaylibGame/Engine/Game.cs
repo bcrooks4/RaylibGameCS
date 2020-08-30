@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Scenes;
 
@@ -22,7 +23,7 @@ namespace RaylibGame.Engine {
             ChangeScene(new SplashScreen());
         }
 
-        public void Update() {
+        public bool Update() {
             string format = "000.##";
             Raylib.SetWindowTitle(string.Format("GAME [FPS:{0}]", Raylib.GetFPS().ToString(format)));
 
@@ -35,21 +36,60 @@ namespace RaylibGame.Engine {
                 
                 _currentScene = _nextScene;
                 _nextScene = null;
-                
-                _currentScene?.Start();
+
+                switch (_currentScene?.Start()) {
+                    case ReturnActions.ReturnError:
+                        break;
+                    case ReturnActions.ReturnQuit:
+                        ChangeScene(null);
+                        return true;
+                    case ReturnActions.ReturnNull:
+                        break;
+                    case null:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
 
-            _currentScene?.Update();
+            switch (_currentScene?.Update()) {
+                case ReturnActions.ReturnError:
+                    break;
+                case ReturnActions.ReturnQuit:
+                    ChangeScene(null);
+                    return true;
+                case ReturnActions.ReturnNull:
+                    break;
+                case null:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return false;
         }
 
-        public void Render() {
+        public bool Render() {
             Raylib.BeginDrawing();
-                Raylib.ClearBackground(Color.BLACK);
-                if (_nextScene == null) {
-                    _currentScene?.Render();
+            Raylib.ClearBackground(Color.BLACK);
+            if (_nextScene == null) {
+                switch (_currentScene?.Render()) {
+                    case ReturnActions.ReturnError:
+                        break;
+                    case ReturnActions.ReturnQuit:
+                        ChangeScene(null);
+                        return true;
+                    case ReturnActions.ReturnNull:
+                        break;
+                    case null:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
+            }
 
-                Raylib.EndDrawing();
+            Raylib.EndDrawing();
+            return false;
         }
 
         public void Close() {
