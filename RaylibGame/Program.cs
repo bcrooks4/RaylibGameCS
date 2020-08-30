@@ -10,8 +10,6 @@ namespace RaylibGame {
             
             game.Start();
             
-            
-            
             while (!Raylib.WindowShouldClose()) {
                 game.Update();
                 game.Render();
