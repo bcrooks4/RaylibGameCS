@@ -265,8 +265,14 @@ namespace RaylibGame.Scenes {
                 
                 bitmap.Save("export.png");
                 bitmap.Dispose();
+                
+                Game.ChangeScene(new MapViewer());
             }
 
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) {
+                Game.ChangeScene(new MainMenu());
+            }
+            
             return ReturnActions.ReturnNull;
         }
 

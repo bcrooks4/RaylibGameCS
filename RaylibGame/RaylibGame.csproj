@@ -57,6 +57,7 @@
         <Compile Include="Scenes\IScene.cs" />
         <Compile Include="Scenes\MainMenu.cs" />
         <Compile Include="Scenes\MapDrawing.cs" />
+        <Compile Include="Scenes\MapViewer.cs" />
         <Compile Include="Scenes\SplashScreen.cs" />
     </ItemGroup>
     <ItemGroup>
