@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
+using Color = Raylib_cs.Color;
 
 namespace RaylibGame.Scenes {
     public class MapDrawing : IScene {
@@ -10,6 +13,8 @@ namespace RaylibGame.Scenes {
         private int _height;
         private int _mapScale;
 
+        private int _textureScale;
+
         private Camera2D _camera;
         
         public ReturnActions Start() {
@@ -17,6 +22,7 @@ namespace RaylibGame.Scenes {
             _height = 8;
             _mapScale = 32;
             _inputMap = new int[_width * _height];
+            _textureScale = 16;
 
             _camera = new Camera2D {zoom = 1};
 
@@ -208,6 +214,22 @@ namespace RaylibGame.Scenes {
                         _inputMap[y * _height + (_width - 1)] = 0;
                     }
                 }
+            }
+
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER)) {
+                Bitmap bitmap = new Bitmap(_width * _textureScale, _height * _textureScale);
+
+                for (int y = 0; y < _height * _textureScale; y++) {
+                    for (int x = 0; x < _width * _textureScale; x++) {
+                        bitmap.SetPixel(x, y, 
+                            _inputMap[y / _textureScale * _width + x / _textureScale] == 1 ? 
+                            System.Drawing.Color.LawnGreen :  
+                            System.Drawing.Color.CornflowerBlue);
+                    }
+                }
+                
+                bitmap.Save("export.png");
+                bitmap.Dispose();
             }
 
             return ReturnActions.ReturnNull;
