@@ -37,8 +37,10 @@ namespace RaylibGame.Scenes {
         }
 
         public ReturnActions Update() {
+            #region Camera Movement
+            
             _camera.offset = new Vector2(Raylib.GetScreenWidth() / 2f, Raylib.GetScreenHeight() / 2f);
-
+            
             if (Raylib.GetMouseWheelMove() > 0) {
                 _camera.zoom += 0.2f;
             }
@@ -75,6 +77,10 @@ namespace RaylibGame.Scenes {
                 }
             }
 
+            #endregion
+
+            #region Map Controlls
+            
             if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_CONTROL)) {
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_ONE)) {
                     _width = 8;
@@ -220,7 +226,11 @@ namespace RaylibGame.Scenes {
                     }
                 }
             }
+            
+            #endregion
 
+            #region Export Map Texture
+            
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER)) {
                 File.Delete("export.png");
                 
@@ -264,11 +274,17 @@ namespace RaylibGame.Scenes {
                 
                 Game.ChangeScene(new MapViewer());
             }
+            
+            #endregion
+
+            #region Quit
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) {
                 Game.ChangeScene(new MainMenu());
             }
-            
+
+            #endregion
+
             return ReturnActions.ReturnNull;
         }
 
