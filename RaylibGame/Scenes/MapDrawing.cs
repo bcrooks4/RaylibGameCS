@@ -37,7 +37,7 @@ namespace RaylibGame.Scenes {
         }
 
         public ReturnActions Update() {
-            _camera.offset = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
+            _camera.offset = new Vector2(Raylib.GetScreenWidth() / 2f, Raylib.GetScreenHeight() / 2f);
 
             if (Raylib.GetMouseWheelMove() > 0) {
                 _camera.zoom += 0.2f;
@@ -93,7 +93,6 @@ namespace RaylibGame.Scenes {
             }
             else {
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_ONE)) {
-                    Random random = new Random();
                     for (int y = 0; y < _height; y++) {
                         for (int x = 0; x < _width; x++) {
                             _inputMap[y * _width + x] = 0;
@@ -102,7 +101,6 @@ namespace RaylibGame.Scenes {
                 }
                 
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_TWO)) {
-                    Random random = new Random();
                     for (int y = 0; y < _height; y++) {
                         for (int x = 0; x < _width; x++) {
                             _inputMap[y * _width + x] = 1;
@@ -188,7 +186,7 @@ namespace RaylibGame.Scenes {
                                     if (_inputMap[0] > 0) neighbourCount++;
                                 }
 
-                                cellMap[y * _width + x] = _inputMap[y * _width + x] > 0 ? true : false;
+                                cellMap[y * _width + x] = _inputMap[y * _width + x] > 0;
                                 if (_inputMap[y * _width + x] > 0) {
                                     if (neighbourCount < 2) {
                                         cellMap[y * _width + x] = false;
@@ -245,8 +243,6 @@ namespace RaylibGame.Scenes {
                 
                 for (int y = 0; y < _height * _textureScale; y++) {
                     for (int x = 0; x < _width * _textureScale; x++) {
-                        
-                        System.Drawing.Color colour = new System.Drawing.Color();
                         float closestDistance = float.MaxValue;
                         int closestIndex = 0;
 
@@ -258,7 +254,7 @@ namespace RaylibGame.Scenes {
                             }
                         }
 
-                        colour = cellColours[closestIndex];
+                        var colour = cellColours[closestIndex];
                         bitmap.SetPixel(x, y, colour);
                     }
                 }
@@ -304,15 +300,17 @@ namespace RaylibGame.Scenes {
             return ReturnActions.ReturnNull;
         }
 
-        public float GetDistance(Vector2 a, Vector2 b, DistanceMethod distanceMethod) {
-            if (distanceMethod == DistanceMethod.Euclidean) {
-                return Vector2.DistanceSquared(a, b);
-            }
-            else {
-                float x = Math.Abs(a.X - b.X);
-                float y = Math.Abs(a.Y - b.Y);
-                float dist = x + y;
-                return dist;
+        private float GetDistance(Vector2 a, Vector2 b, DistanceMethod distanceMethod) {
+            switch (distanceMethod) {
+                case DistanceMethod.Euclidean:
+                    return Vector2.DistanceSquared(a, b);
+                case DistanceMethod.Manhattan: 
+                    float x = Math.Abs(a.X - b.X);
+                    float y = Math.Abs(a.Y - b.Y);
+                    float dist = x + y;
+                    return dist;
+                default:
+                    return 0f;
             }
         }
     }
