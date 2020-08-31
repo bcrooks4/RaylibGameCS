@@ -72,10 +72,16 @@ namespace RaylibGame.Scenes {
                 }
 
                 Raylib.DrawText(_menuButtons[i].Text, 
-                    5, 
-                    Raylib.GetScreenHeight() - (_menuButtons.Length - i) * _menuFontSize, 
+                    20, 
+                    Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * _menuFontSize + 20), 
                     _menuFontSize, 
                     colour);
+                
+                Raylib.DrawRectangleLines(10, 
+                    10, 
+                    Raylib.GetScreenWidth() - 20,
+                    Raylib.GetScreenHeight() - 20,
+                    Color.WHITE);
             }
             return ReturnActions.ReturnNull;
         }
