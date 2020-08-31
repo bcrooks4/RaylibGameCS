@@ -67,9 +67,14 @@ namespace RaylibGame.Scenes {
             Raylib.DrawTexture(_mapTexture, 0, 0, Color.WHITE);
 
             if (_highlightedRegion >= 0) {
-                foreach (var region in Regions[_highlightedRegion]) {
-                    Raylib.DrawPixelV(region, Color.WHITE); // No fucking clue why this looks so cool,
+                foreach (var coordinate in Regions[_highlightedRegion]) {
+                    //Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
                                                             // not what I intended but still cool
+                    Raylib.DrawRectangle((int)coordinate.X, 
+                        (int)coordinate.Y, 
+                        1, 
+                        1, 
+                        Raylib.Fade(Color.WHITE, 0.2f));
                 }
             }
             Raylib.EndMode2D();
