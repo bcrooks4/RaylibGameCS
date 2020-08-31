@@ -15,7 +15,7 @@ namespace RaylibGame.Scenes {
         }
 
         public ReturnActions Update() {
-            _camera.offset = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
+            _camera.offset = new Vector2(Raylib.GetScreenWidth() / 2f, Raylib.GetScreenHeight() / 2f);
 
             if (Raylib.GetMouseWheelMove() > 0) {
                 _camera.zoom += 0.2f;
