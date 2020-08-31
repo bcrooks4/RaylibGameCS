@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Scenes;
 
@@ -34,6 +33,8 @@ namespace RaylibGame.Engine {
                 
                 _currentScene = _nextScene;
                 _nextScene = null;
+
+                Raylib.SetTargetFPS(int.MaxValue);
 
                 switch (_currentScene?.Start()) {
                     case ReturnActions.ReturnError:

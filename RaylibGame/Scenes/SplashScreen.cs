@@ -7,6 +7,7 @@ namespace RaylibGame.Scenes {
         private float _alpha;
         
         public ReturnActions Start() {
+            Raylib.SetTargetFPS(60);
             return ReturnActions.ReturnNull;
         }
 

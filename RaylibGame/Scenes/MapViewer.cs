@@ -53,7 +53,6 @@ namespace RaylibGame.Scenes {
 
         public ReturnActions Close() {
             Raylib.UnloadTexture(_mapTexture);
-            Raylib.SetTargetFPS(int.MaxValue);
             return ReturnActions.ReturnNull;
         }
     }

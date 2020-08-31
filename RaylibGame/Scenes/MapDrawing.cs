@@ -312,7 +312,6 @@ namespace RaylibGame.Scenes {
         }
 
         public ReturnActions Close() {
-            Raylib.SetTargetFPS(int.MaxValue);
             return ReturnActions.ReturnNull;
         }
 
