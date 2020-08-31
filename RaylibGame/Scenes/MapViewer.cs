@@ -74,7 +74,7 @@ namespace RaylibGame.Scenes {
                         (int)coordinate.Y, 
                         1, 
                         1, 
-                        Raylib.Fade(Color.WHITE, 0.2f));
+                        Raylib.Fade(Color.YELLOW, 0.15f));
                 }
             }
             Raylib.EndMode2D();
