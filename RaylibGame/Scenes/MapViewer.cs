@@ -68,7 +68,8 @@ namespace RaylibGame.Scenes {
 
             if (_highlightedRegion >= 0) {
                 foreach (var region in Regions[_highlightedRegion]) {
-                    Raylib.DrawPixelV(region, Color.WHITE);
+                    Raylib.DrawPixelV(region, Color.WHITE); // No fucking clue why this looks so cool,
+                                                            // not what I intended but still cool
                 }
             }
             Raylib.EndMode2D();
