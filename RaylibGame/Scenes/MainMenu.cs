@@ -16,7 +16,7 @@ namespace RaylibGame.Scenes {
     }
 
     public class MainMenu : IScene {
-        private MenuButton[] _menuButtons = new[] {
+        private readonly MenuButton[] _menuButtons = new[] {
             new MenuButton("Play", 0),
             new MenuButton("Options", 1),
             new MenuButton("Credits", 2), 
