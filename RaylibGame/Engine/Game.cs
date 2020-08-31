@@ -5,17 +5,16 @@ using RaylibGame.Scenes;
 
 namespace RaylibGame.Engine {
     public class Game {
-        private static int _windowedWidth = 0;
-        private static int _windowedHeight = 0;
-        private static bool _fullscreen = false;
+        private static int _windowedWidth;
+        private static int _windowedHeight;
+        private static bool _fullscreen;
 
-        private static IScene _currentScene = null;
-        private static IScene _nextScene = null;
+        private static IScene _currentScene;
+        private static IScene _nextScene;
         
         public void Start() {
             Raylib.SetConfigFlags(ConfigFlag.FLAG_WINDOW_RESIZABLE);
             Raylib.InitWindow(800, 600, "GAME [FPS:000]");
-            //Raylib.SetTargetFPS(60);
             Raylib.SetWindowMinSize(400, 200);
             Raylib.SetExitKey(KeyboardKey.KEY_GRAVE);
             
@@ -43,8 +42,6 @@ namespace RaylibGame.Engine {
                         ChangeScene(null);
                         return true;
                     case ReturnActions.ReturnNull:
-                        break;
-                    case null:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

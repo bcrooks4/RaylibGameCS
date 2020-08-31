@@ -3,7 +3,7 @@ using RaylibGame.Engine;
 using RaylibGame.Scenes;
 
 namespace RaylibGame {
-    internal class Program {
+    internal static class Program {
         public static void Main(string[] args) {
             Game game = new Game();
             

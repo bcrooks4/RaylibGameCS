@@ -5,7 +5,7 @@ using Raylib_cs;
 using RaylibGame.Engine;
 
 namespace RaylibGame.Scenes {
-    internal struct MenuButton {
+    internal readonly struct MenuButton {
         public readonly string Text;
         public readonly int ButtonAction;
 
@@ -22,8 +22,9 @@ namespace RaylibGame.Scenes {
             new MenuButton("Credits", 2), 
             new MenuButton("Quit", 3), 
         };
-        private int _menuFontSize = 64;
-        private int _highlightedButton = 0;
+
+        private const int MenuFontSize = 64;
+        private int _highlightedButton;
         
         public ReturnActions Start() {
             return ReturnActions.ReturnNull;
@@ -73,8 +74,8 @@ namespace RaylibGame.Scenes {
 
                 Raylib.DrawText(_menuButtons[i].Text, 
                     20, 
-                    Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * _menuFontSize + 20), 
-                    _menuFontSize, 
+                    Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * MenuFontSize + 20), 
+                    MenuFontSize, 
                     colour);
                 
                 Raylib.DrawRectangleLines(10, 
