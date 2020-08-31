@@ -6,8 +6,8 @@ using RaylibGame.Engine;
 
 namespace RaylibGame.Scenes {
     internal struct MenuButton {
-        public string Text;
-        public int ButtonAction;
+        public readonly string Text;
+        public readonly int ButtonAction;
 
         public MenuButton(string text, int buttonAction) {
             Text = text;
