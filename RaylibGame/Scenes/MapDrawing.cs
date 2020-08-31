@@ -349,7 +349,9 @@ namespace RaylibGame.Scenes {
                         ? System.Drawing.Color.FromArgb(137, 224, 79)
                         : System.Drawing.Color.FromArgb(79, 174, 224);
 
-                    regions.Add(new Region(new List<Vector2>(), RegionType.Ocean, new Vector2()));
+                    regions.Add(new Region(new List<Vector2>(), 
+                        _inputMap[y * _width + x] == 1 ? RegionType.Grassland : RegionType.Ocean, 
+                        new Vector2()));
                 }
             }
 

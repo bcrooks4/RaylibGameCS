@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
+using RaylibGame.Types;
 using Color = Raylib_cs.Color;
 using Region = RaylibGame.Types.Region;
 
@@ -27,6 +28,8 @@ namespace RaylibGame.Scenes {
 
             Random random = new Random();
             for (int i = 0; i < Regions.Count; i++) {
+                if (Regions[i].RegionType == RegionType.Ocean)
+                    continue;
                 if (random.Next() % 10 == 0) {
                     foreach (var position in Regions[i].RegionLocations) {
                         if (random.Next() % 32 == 0) 
@@ -94,18 +97,21 @@ namespace RaylibGame.Scenes {
             Raylib.DrawTexture(_mapTexture, 0, 0, Color.WHITE);
 
             foreach (var position in _trees) {
-                Raylib.DrawTextureV(_treeTexture, position - new Vector2(16, 28), Color.WHITE);
+                Color colour;
+                colour = _camera.zoom < 5 ? Color.WHITE : Raylib.Fade(Color.WHITE, 0.2f);
+                Raylib.DrawTextureV(_treeTexture, position - new Vector2(16, 28), colour);
             }
-            
+
+
             if (_highlightedRegion >= 0) {
                 foreach (var coordinate in Regions[_highlightedRegion].RegionLocations) {
-                    //Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
-                                                            // not what I intended but still cool
+                    Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
+                                                                // not what I intended but still cool
                     Raylib.DrawRectangle((int)coordinate.X, 
                         (int)coordinate.Y, 
                         1, 
                         1, 
-                        Raylib.Fade(Color.YELLOW, 0.15f));
+                        Raylib.Fade(Color.WHITE, 0.3f));
                 }
             }
             Raylib.EndMode2D();
