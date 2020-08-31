@@ -6,14 +6,10 @@ using System.Linq;
 using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
+using RaylibGame.Types;
 using Color = Raylib_cs.Color;
 
 namespace RaylibGame.Scenes {
-    public enum DistanceMethod {
-        Euclidean,
-        Manhattan,
-    }
-    
     public class MapDrawing : IScene {
         private int[] _inputMap;
         private int _width;
@@ -263,7 +259,7 @@ namespace RaylibGame.Scenes {
                         int closestIndex = 0;
 
                         for (int i = 0; i < cellPositions.Length; i++) {
-                            float distance = GetDistance(new Vector2(x, y), cellPositions[i], DistanceMethod.Manhattan);
+                            float distance = GetDistance(new Vector2(x, y), cellPositions[i], Distance.Manhattan);
                             if (distance < closestDistance) {
                                 closestDistance = distance;
                                 closestIndex = i;
@@ -327,11 +323,11 @@ namespace RaylibGame.Scenes {
             return ReturnActions.ReturnNull;
         }
 
-        private float GetDistance(Vector2 a, Vector2 b, DistanceMethod distanceMethod) {
+        private float GetDistance(Vector2 a, Vector2 b, Distance distanceMethod) {
             switch (distanceMethod) {
-                case DistanceMethod.Euclidean:
+                case Distance.Euclidean:
                     return Vector2.DistanceSquared(a, b);
-                case DistanceMethod.Manhattan: 
+                case Distance.Manhattan: 
                     float x = Math.Abs(a.X - b.X);
                     float y = Math.Abs(a.Y - b.Y);
                     float dist = x + y;

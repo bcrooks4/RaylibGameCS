@@ -7,16 +7,31 @@ using RaylibGame.Engine;
 namespace RaylibGame.Scenes {
     public class MapViewer : IScene {
         public List<List<Vector2>> Regions;
+        private List<Vector2> _trees;
         
         private Texture2D _mapTexture;
+        private Texture2D _treeTexture;
         private Camera2D _camera;
 
         private int _highlightedRegion = -1;
 
         public ReturnActions Start() {
             _mapTexture = Raylib.LoadTexture("export.png");
+            _treeTexture = Raylib.LoadTexture("Resources/tree.png");
+            _trees = new List<Vector2>();
             _camera = new Camera2D {zoom = 1};
             Raylib.SetTargetFPS(60);
+
+            Random random = new Random();
+            for (int i = 0; i < Regions.Count; i++) {
+                if (random.Next() % 10 == 0) {
+                    foreach (var position in Regions[i]) {
+                        if (random.Next() % 32 == 0) 
+                            _trees.Add(position);
+                    }
+                }
+            }
+            
             return ReturnActions.ReturnNull;
         }
 
@@ -47,7 +62,7 @@ namespace RaylibGame.Scenes {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) {
                 Game.ChangeScene(new MapDrawing());
             }
-            
+
             Vector2 mouseCoordinate = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _camera);
             mouseCoordinate.X = (float)Math.Floor(mouseCoordinate.X);
             mouseCoordinate.Y = (float)Math.Floor(mouseCoordinate.Y);
@@ -58,6 +73,15 @@ namespace RaylibGame.Scenes {
                 }
             }
             
+            /*
+            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)) {
+                Random random = new Random();
+                foreach (var position in Regions[_highlightedRegion]) {
+                    if (random.Next() % 32 == 0) 
+                        _trees.Add(position);
+                }
+            }
+            */
             
             return ReturnActions.ReturnNull;
         }
@@ -66,6 +90,10 @@ namespace RaylibGame.Scenes {
             Raylib.BeginMode2D(_camera);
             Raylib.DrawTexture(_mapTexture, 0, 0, Color.WHITE);
 
+            foreach (var position in _trees) {
+                Raylib.DrawTextureV(_treeTexture, position - new Vector2(16, 28), Color.WHITE);
+            }
+            
             if (_highlightedRegion >= 0) {
                 foreach (var coordinate in Regions[_highlightedRegion]) {
                     //Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
@@ -88,6 +116,7 @@ namespace RaylibGame.Scenes {
 
         public ReturnActions Close() {
             Raylib.UnloadTexture(_mapTexture);
+            Raylib.UnloadTexture(_treeTexture);
             return ReturnActions.ReturnNull;
         }
     }

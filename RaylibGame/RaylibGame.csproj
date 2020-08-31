@@ -59,6 +59,8 @@
         <Compile Include="Scenes\MapDrawing.cs" />
         <Compile Include="Scenes\MapViewer.cs" />
         <Compile Include="Scenes\SplashScreen.cs" />
+        <Compile Include="Types\Distance.cs" />
+        <Compile Include="Types\Region.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
