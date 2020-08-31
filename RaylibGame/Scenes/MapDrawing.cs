@@ -246,7 +246,7 @@ namespace RaylibGame.Scenes {
                             y * _textureScale + random.Next() % _textureScale);
 
                         cellColours[y * _width + x] = _inputMap[y * _width + x] == 1
-                            ? System.Drawing.Color.YellowGreen
+                            ? System.Drawing.Color.Chartreuse
                             : System.Drawing.Color.CornflowerBlue;
                     }
                 }
