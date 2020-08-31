@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
@@ -238,6 +240,9 @@ namespace RaylibGame.Scenes {
 
                 Vector2[] cellPositions = new Vector2[_width * _height];
                 System.Drawing.Color[] cellColours = new System.Drawing.Color[_width * _height];
+
+                List<List<Vector2>> regions = new List<List<Vector2>>();
+                
                 for (int y = 0; y < _height; y++) {
                     for (int x = 0; x < _width; x++) {
                         cellPositions[y * _width + x] = new Vector2(
@@ -247,6 +252,8 @@ namespace RaylibGame.Scenes {
                         cellColours[y * _width + x] = _inputMap[y * _width + x] == 1
                             ? System.Drawing.Color.Chartreuse
                             : System.Drawing.Color.CornflowerBlue;
+                        
+                        regions.Add(new List<Vector2>());
                     }
                 }
                 
@@ -265,13 +272,18 @@ namespace RaylibGame.Scenes {
 
                         var colour = cellColours[closestIndex];
                         bitmap.SetPixel(x, y, colour);
+
+                        regions[closestIndex].Add(new Vector2(x, y));
                     }
                 }
                 
                 bitmap.Save("export.png");
                 bitmap.Dispose();
                 
-                Game.ChangeScene(new MapViewer());
+                MapViewer mapViewer = new MapViewer();
+                mapViewer.Regions = regions;
+
+                Game.ChangeScene(mapViewer);
             }
             
             #endregion

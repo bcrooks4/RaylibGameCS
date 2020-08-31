@@ -1,12 +1,18 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
 
 namespace RaylibGame.Scenes {
     public class MapViewer : IScene {
+        public List<List<Vector2>> Regions;
+        
         private Texture2D _mapTexture;
         private Camera2D _camera;
-        
+
+        private int _highlightedRegion = -1;
+
         public ReturnActions Start() {
             _mapTexture = Raylib.LoadTexture("export.png");
             _camera = new Camera2D {zoom = 1};
@@ -41,13 +47,36 @@ namespace RaylibGame.Scenes {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) {
                 Game.ChangeScene(new MapDrawing());
             }
+            
+            Vector2 mouseCoordinate = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _camera);
+            mouseCoordinate.X = (float)Math.Floor(mouseCoordinate.X);
+            mouseCoordinate.Y = (float)Math.Floor(mouseCoordinate.Y);
+            _highlightedRegion = -1;
+            for (int i = 0; i < Regions.Count; i++) {
+                if (Regions[i].Contains(new Vector2(mouseCoordinate.X, mouseCoordinate.Y))) {
+                    _highlightedRegion = i;
+                }
+            }
+            
+            
             return ReturnActions.ReturnNull;
         }
 
         public ReturnActions Render() {
             Raylib.BeginMode2D(_camera);
-            Raylib.DrawTexture(_mapTexture, -_mapTexture.width / 2, -_mapTexture.height / 2, Color.WHITE);
+            Raylib.DrawTexture(_mapTexture, 0, 0, Color.WHITE);
+
+            if (_highlightedRegion >= 0) {
+                foreach (var region in Regions[_highlightedRegion]) {
+                    Raylib.DrawPixelV(region, Color.WHITE);
+                }
+            }
             Raylib.EndMode2D();
+
+            if (_highlightedRegion >= 0) {
+                Raylib.DrawText($"Highlighting region: {_highlightedRegion}", 0, 0, 32, Color.WHITE);
+            }
+
             return ReturnActions.ReturnNull;
         }
 
