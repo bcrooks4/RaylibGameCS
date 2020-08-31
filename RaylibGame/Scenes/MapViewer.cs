@@ -10,6 +10,7 @@ namespace RaylibGame.Scenes {
         public ReturnActions Start() {
             _mapTexture = Raylib.LoadTexture("export.png");
             _camera = new Camera2D {zoom = 1};
+            Raylib.SetTargetFPS(60);
             return ReturnActions.ReturnNull;
         }
 
@@ -52,6 +53,7 @@ namespace RaylibGame.Scenes {
 
         public ReturnActions Close() {
             Raylib.UnloadTexture(_mapTexture);
+            Raylib.SetTargetFPS(int.MaxValue);
             return ReturnActions.ReturnNull;
         }
     }

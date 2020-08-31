@@ -33,6 +33,7 @@ namespace RaylibGame.Scenes {
 
             _camera = new Camera2D {zoom = 1};
 
+            Raylib.SetTargetFPS(60);
             return ReturnActions.ReturnNull;
         }
 
@@ -313,6 +314,7 @@ namespace RaylibGame.Scenes {
         }
 
         public ReturnActions Close() {
+            Raylib.SetTargetFPS(int.MaxValue);
             return ReturnActions.ReturnNull;
         }
 

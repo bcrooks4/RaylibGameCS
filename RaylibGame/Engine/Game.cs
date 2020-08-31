@@ -15,16 +15,15 @@ namespace RaylibGame.Engine {
         public void Start() {
             Raylib.SetConfigFlags(ConfigFlag.FLAG_WINDOW_RESIZABLE);
             Raylib.InitWindow(800, 600, "GAME [FPS:000]");
-            Raylib.SetTargetFPS(60);
+            //Raylib.SetTargetFPS(60);
             Raylib.SetWindowMinSize(400, 200);
-            Raylib.SetTargetFPS(60);
             Raylib.SetExitKey(KeyboardKey.KEY_GRAVE);
             
             ChangeScene(new SplashScreen());
         }
 
         public bool Update() {
-            string format = "000.##";
+            string format = "0000.##";
             Raylib.SetWindowTitle(string.Format("GAME [FPS:{0}]", Raylib.GetFPS().ToString(format)));
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_F10)) {
@@ -120,7 +119,7 @@ namespace RaylibGame.Engine {
                 
                 Raylib.InitWindow(_windowedWidth, _windowedHeight, "");
             }
-            Raylib.SetTargetFPS(60);
+            //Raylib.SetTargetFPS(60);
             Raylib.SetExitKey(KeyboardKey.KEY_GRAVE);
         }
 
