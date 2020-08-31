@@ -61,6 +61,7 @@
         <Compile Include="Scenes\SplashScreen.cs" />
         <Compile Include="Types\Distance.cs" />
         <Compile Include="Types\Region.cs" />
+        <Compile Include="Types\RegionType.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

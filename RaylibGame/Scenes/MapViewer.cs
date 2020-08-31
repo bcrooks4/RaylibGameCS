@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
+using Color = Raylib_cs.Color;
+using Region = RaylibGame.Types.Region;
 
 namespace RaylibGame.Scenes {
     public class MapViewer : IScene {
-        public List<List<Vector2>> Regions;
+        public List<Region> Regions;
         private List<Vector2> _trees;
         
         private Texture2D _mapTexture;
@@ -25,7 +28,7 @@ namespace RaylibGame.Scenes {
             Random random = new Random();
             for (int i = 0; i < Regions.Count; i++) {
                 if (random.Next() % 10 == 0) {
-                    foreach (var position in Regions[i]) {
+                    foreach (var position in Regions[i].RegionLocations) {
                         if (random.Next() % 32 == 0) 
                             _trees.Add(position);
                     }
@@ -68,7 +71,7 @@ namespace RaylibGame.Scenes {
             mouseCoordinate.Y = (float)Math.Floor(mouseCoordinate.Y);
             _highlightedRegion = -1;
             for (int i = 0; i < Regions.Count; i++) {
-                if (Regions[i].Contains(new Vector2(mouseCoordinate.X, mouseCoordinate.Y))) {
+                if (Regions[i].RegionLocations.Contains(new Vector2(mouseCoordinate.X, mouseCoordinate.Y))) {
                     _highlightedRegion = i;
                 }
             }
@@ -95,7 +98,7 @@ namespace RaylibGame.Scenes {
             }
             
             if (_highlightedRegion >= 0) {
-                foreach (var coordinate in Regions[_highlightedRegion]) {
+                foreach (var coordinate in Regions[_highlightedRegion].RegionLocations) {
                     //Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
                                                             // not what I intended but still cool
                     Raylib.DrawRectangle((int)coordinate.X, 
