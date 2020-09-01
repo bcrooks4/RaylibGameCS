@@ -14,7 +14,7 @@ namespace RaylibGame.Scenes {
             ButtonAction = buttonAction;
         }
     }
-
+    
     public class MainMenu : IScene {
         private readonly MenuButton[] _menuButtons = new[] {
             new MenuButton("Play", 0),
@@ -25,7 +25,9 @@ namespace RaylibGame.Scenes {
 
         private const int MenuFontSize = 64;
         private int _highlightedButton;
-        
+
+        private int _frame;
+
         public ReturnActions Start() {
             return ReturnActions.ReturnNull;
         }
@@ -59,10 +61,14 @@ namespace RaylibGame.Scenes {
                 }
             }
 
+            _frame++;
             return ReturnActions.ReturnNull;
         }
 
         public ReturnActions Render() {
+            Raylib.DrawRectangleGradientV(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Color.BLUE, Color.DARKBLUE);
+            Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Raylib.Fade(Color.BLACK, (float)Math.Sin(_frame / 500f) / 5f));
+
             for (int i = 0; i < _menuButtons.Length; i++) {
                 Color colour;
                 if (i == _highlightedButton) {
@@ -77,13 +83,13 @@ namespace RaylibGame.Scenes {
                     Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * MenuFontSize + 20), 
                     MenuFontSize, 
                     colour);
-                
-                Raylib.DrawRectangleLines(10, 
-                    10, 
-                    Raylib.GetScreenWidth() - 20,
-                    Raylib.GetScreenHeight() - 20,
-                    Color.WHITE);
             }
+            
+            Raylib.DrawRectangleLines(10, 
+                10, 
+                Raylib.GetScreenWidth() - 20,
+                Raylib.GetScreenHeight() - 20,
+                Color.WHITE);
             return ReturnActions.ReturnNull;
         }
 
