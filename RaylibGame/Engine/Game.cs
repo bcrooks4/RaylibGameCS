@@ -34,7 +34,7 @@ namespace RaylibGame.Engine {
                 _currentScene = _nextScene;
                 _nextScene = null;
 
-                Raylib.SetTargetFPS(int.MaxValue);
+                Raylib.SetTargetFPS(60);
 
                 switch (_currentScene?.Start()) {
                     case ReturnActions.ReturnError:
@@ -117,7 +117,7 @@ namespace RaylibGame.Engine {
                 
                 Raylib.InitWindow(_windowedWidth, _windowedHeight, "");
             }
-            //Raylib.SetTargetFPS(60);
+            Raylib.SetTargetFPS(60);
             Raylib.SetExitKey(KeyboardKey.KEY_GRAVE);
         }
 

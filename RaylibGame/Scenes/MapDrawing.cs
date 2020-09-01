@@ -34,7 +34,6 @@ namespace RaylibGame.Scenes {
 
             _camera = new Camera2D {zoom = 1};
 
-            Raylib.SetTargetFPS(60);
             return ReturnActions.ReturnNull;
         }
 
@@ -361,7 +360,7 @@ namespace RaylibGame.Scenes {
                     int closestIndex = 0;
 
                     for (int i = 0; i < cellPositions.Length; i++) {
-                        float distance = GetDistance(new Vector2(x, y), cellPositions[i], Distance.Manhattan);
+                        float distance = GetDistance(new Vector2(x, y), cellPositions[i], Distance.Euclidean);
                         if (distance < closestDistance) {
                             closestDistance = distance;
                             closestIndex = i;

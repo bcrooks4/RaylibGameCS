@@ -24,7 +24,6 @@ namespace RaylibGame.Scenes {
             _treeTexture = Raylib.LoadTexture("Resources/tree.png");
             _trees = new List<Vector2>();
             _camera = new Camera2D {zoom = 1};
-            Raylib.SetTargetFPS(60);
 
             Random random = new Random();
             for (int i = 0; i < Regions.Count; i++) {
@@ -49,21 +48,22 @@ namespace RaylibGame.Scenes {
             }
             else if (Raylib.GetMouseWheelMove() < 0) {
                 _camera.zoom -= 0.2f;
-                if (_camera.zoom <= 0.05f) _camera.zoom = 0.05f;
             }
+            if (_camera.zoom <= 0.05f) _camera.zoom = 0.05f;
+            else if (_camera.zoom > 10f) _camera.zoom = 10f;
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_UP)) {
-                _camera.target.Y -= 10;
+                _camera.target.Y -= 11f - _camera.zoom;
             }
             if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN)) {
-                _camera.target.Y += 10;
+                _camera.target.Y += 11f - _camera.zoom;
             }
             if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT)) {
-                _camera.target.X -= 10;
+                _camera.target.X -= 11f - _camera.zoom;
             }
             if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT)) {
-                _camera.target.X += 10;
-            }
+                _camera.target.X += 11f - _camera.zoom;
+            }    
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) {
                 Game.ChangeScene(new MapDrawing());
@@ -98,7 +98,7 @@ namespace RaylibGame.Scenes {
 
             foreach (var position in _trees) {
                 Color colour;
-                colour = _camera.zoom < 5 ? Color.WHITE : Raylib.Fade(Color.WHITE, 0.2f);
+                colour = _camera.zoom < 8 ? Color.WHITE : Raylib.Fade(Color.WHITE, 0.2f);
                 Raylib.DrawTextureV(_treeTexture, position - new Vector2(16, 28), colour);
             }
 
