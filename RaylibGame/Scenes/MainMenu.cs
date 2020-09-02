@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Raylib_cs;
 using RaylibGame.Engine;
 
@@ -23,10 +24,12 @@ namespace RaylibGame.Scenes {
             new MenuButton("Quit", 3), 
         };
 
-        private const int MenuFontSize = 64;
+        private const int MenuFontSize = 40;
         private int _highlightedButton;
 
         private int _frame;
+
+        private Texture2D _backgroundTexture = Raylib.LoadTexture("Resources/background.png");
 
         public ReturnActions Start() {
             return ReturnActions.ReturnNull;
@@ -66,16 +69,24 @@ namespace RaylibGame.Scenes {
         }
 
         public ReturnActions Render() {
-            Raylib.DrawRectangleGradientV(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Color.BLUE, Color.DARKBLUE);
-            Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Raylib.Fade(Color.BLACK, (float)Math.Sin(_frame / 500f) / 5f));
+            //Raylib.DrawRectangleGradientV(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Color.BLUE, Color.DARKBLUE);
+            //Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Raylib.Fade(Color.BLACK, (float)Math.Sin(_frame / 500f) / 3f));
 
+            int size = Math.Max(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+            
+            Raylib.DrawTextureQuad(_backgroundTexture, 
+                new Vector2(2, 2), 
+                new Vector2((float)Raylib.GetTime() * 0.1f, 0), 
+                new Rectangle(0, 0, size, size), 
+                Color.WHITE);
+            
             for (int i = 0; i < _menuButtons.Length; i++) {
                 Color colour;
                 if (i == _highlightedButton) {
                     colour = Color.RAYWHITE;
                 }
                 else {
-                    colour = new Color(50, 50, 50, 255);
+                    colour = new Color(50, 50, 50, 125);
                 }
 
                 Raylib.DrawText(_menuButtons[i].Text, 
