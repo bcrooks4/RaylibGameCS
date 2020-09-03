@@ -18,6 +18,9 @@ namespace RaylibGame.Scenes {
         private Camera2D _camera;
 
         private int _highlightedRegion = -1;
+        private int _selectedRegion = -1;
+
+        private bool _showRegionInformation;
 
         public ReturnActions Start() {
             _mapTexture = Raylib.LoadTexture("export.png");
@@ -78,6 +81,23 @@ namespace RaylibGame.Scenes {
                     _highlightedRegion = i;
                 }
             }
+
+            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)) {
+                if (_highlightedRegion >= 0) {
+                    Console.WriteLine(Regions[_highlightedRegion].RegionName);
+                    _showRegionInformation = true;
+                    _selectedRegion = _highlightedRegion;
+                }
+                else {
+                    if (Raylib.GetMouseX() > 0 && Raylib.GetMouseX() < 400 && Raylib.GetMouseY() > 0 && Raylib.GetMouseY() < 400) {
+                        
+                    }
+                    else {
+                        _showRegionInformation = false;
+                        _highlightedRegion = -1;
+                    }
+                }
+            }
             
             /*
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)) {
@@ -116,10 +136,16 @@ namespace RaylibGame.Scenes {
             }
             Raylib.EndMode2D();
 
-            if (_highlightedRegion >= 0) {
-                Raylib.DrawText($"Highlighting region: {_highlightedRegion}", 0, 0, 32, Color.WHITE);
+            if (_showRegionInformation && _selectedRegion >= 0) {
+                Raylib.DrawRectangle(0, 0, 400, Raylib.GetScreenHeight(), Color.PURPLE);
+                string name = Regions[_selectedRegion].RegionName;
+                int x = 200 - Raylib.MeasureText(name, 32) / 2;
+                Raylib.DrawText(name, x, 10, 32, Color.WHITE);
+                Raylib.DrawLineEx(new Vector2(x, 44), new Vector2(x + Raylib.MeasureText(name, 32), 44), 4f, Color.WHITE);
             }
 
+            
+            
             return ReturnActions.ReturnNull;
         }
 

@@ -22,7 +22,7 @@ namespace RaylibGame.Engine {
 
         public bool Update() {
             string format = "0000.##";
-            Raylib.SetWindowTitle(string.Format("GAME [FPS:{0}]", Raylib.GetFPS().ToString(format)));
+            Raylib.SetWindowTitle($"GAME [FPS:{Raylib.GetFPS().ToString(format)}]");
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_F10)) {
                 ToggleFullscreen();

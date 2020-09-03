@@ -351,7 +351,7 @@ namespace RaylibGame.Scenes {
                     regions.Add(new Region(new List<Vector2>(), 
                         _inputMap[y * _width + x] == 1 ? RegionType.Grassland : RegionType.Ocean, 
                         new Vector2(),
-                        "[REGION NAME]"));
+                        $"[REGION NAME {y * _width + x}]"));
                 }
             }
 
