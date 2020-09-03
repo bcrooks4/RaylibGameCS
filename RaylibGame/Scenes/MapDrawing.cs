@@ -290,16 +290,16 @@ namespace RaylibGame.Scenes {
                 string text;
                 switch (frame / 30) {
                     case 0:
-                        text = "Generating .";
+                        text = "Generating.";
                         break;
                     case 1:
-                        text = "Generating ..";
+                        text = "Generating..";
                         break;
                     case 2:
-                        text = "Generating ...";
+                        text = "Generating...";
                         break;
                     default:
-                        text = "Generating .";
+                        text = "Generating.";
                         break;
                 }
                 int x = Raylib.GetScreenWidth() / 2 - Raylib.MeasureText(text, 64) / 2;
@@ -350,7 +350,8 @@ namespace RaylibGame.Scenes {
 
                     regions.Add(new Region(new List<Vector2>(), 
                         _inputMap[y * _width + x] == 1 ? RegionType.Grassland : RegionType.Ocean, 
-                        new Vector2()));
+                        new Vector2(),
+                        "[REGION NAME]"));
                 }
             }
 

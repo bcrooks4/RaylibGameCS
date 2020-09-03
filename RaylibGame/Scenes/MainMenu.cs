@@ -72,13 +72,13 @@ namespace RaylibGame.Scenes {
             //Raylib.DrawRectangleGradientV(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Color.BLUE, Color.DARKBLUE);
             //Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), Raylib.Fade(Color.BLACK, (float)Math.Sin(_frame / 500f) / 3f));
 
-            Raylib.ClearBackground(Color.DARKGRAY);
+            Raylib.ClearBackground(Color.GOLD);
             
             int size = Math.Max(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             
             Raylib.DrawTextureQuad(_backgroundTexture, 
-                new Vector2((Raylib.GetScreenWidth() - 20) / (float)_backgroundTexture.width / 2,
-                    (Raylib.GetScreenHeight() - 20) / (float)_backgroundTexture.height / 2), 
+                new Vector2((Raylib.GetScreenWidth() - 20) / (float)_backgroundTexture.width / 2.5f,
+                    (Raylib.GetScreenHeight() - 20) / (float)_backgroundTexture.height / 2.5f), 
                 new Vector2((float)Raylib.GetTime() * 0.1f, 0), 
                 new Rectangle(10, 10, Raylib.GetScreenWidth() - 20, Raylib.GetScreenHeight() - 20), 
                 Color.WHITE);
@@ -86,7 +86,7 @@ namespace RaylibGame.Scenes {
             for (int i = 0; i < _menuButtons.Length; i++) {
                 Color colour;
                 if (i == _highlightedButton) {
-                    colour = Color.RAYWHITE;
+                    colour = Color.WHITE;
                 }
                 else {
                     colour = new Color(50, 50, 50, 125);
@@ -94,7 +94,7 @@ namespace RaylibGame.Scenes {
 
                 if (_highlightedButton == i) {
                     Raylib.DrawRectangleGradientH(10,
-                        Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * MenuFontSize + 20),
+                        Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * MenuFontSize + 10),
                         300,
                         MenuFontSize,
                         Raylib.Fade(Color.WHITE, 0.5f),
@@ -103,7 +103,7 @@ namespace RaylibGame.Scenes {
 
                 Raylib.DrawText(_menuButtons[i].Text, 
                     20, 
-                    Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * MenuFontSize + 20), 
+                    Raylib.GetScreenHeight() - ((_menuButtons.Length - i) * MenuFontSize + 10), 
                     MenuFontSize, 
                     colour);
             }
@@ -112,7 +112,12 @@ namespace RaylibGame.Scenes {
                 10, 
                 Raylib.GetScreenWidth() - 20,
                 Raylib.GetScreenHeight() - 20,
-                Color.WHITE);
+                Color.MAROON);
+            Raylib.DrawRectangleLines(0, 
+                0, 
+                Raylib.GetScreenWidth(),
+                Raylib.GetScreenHeight(),
+                Color.YELLOW);
             return ReturnActions.ReturnNull;
         }
 
