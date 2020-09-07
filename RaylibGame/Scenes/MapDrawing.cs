@@ -23,7 +23,9 @@ namespace RaylibGame.Scenes {
         private Camera2D _camera;
 
         private bool _generating = false;
-        private int frame = 0;
+        private int _frame = 0;
+
+        private int _regionDrawValue;
         
         public ReturnActions Start() {
             _width = 16;
@@ -71,7 +73,7 @@ namespace RaylibGame.Scenes {
                     int x = (int) (Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _camera) / _mapScale).X;
                     int y = (int) (Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _camera) / _mapScale).Y;
                     if (x >= 0 && x < _width && y >= 0 && y < _height) {
-                        _inputMap[y * _width + x] = 1;
+                        _inputMap[y * _width + x] = _regionDrawValue;
                     }
                 }
 
@@ -86,6 +88,15 @@ namespace RaylibGame.Scenes {
                 #endregion
 
                 #region Map Controlls
+
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_MINUS)) {
+                    _regionDrawValue--;
+                    _regionDrawValue = Math.Max(0, _regionDrawValue);
+                }
+                else if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT) && Raylib.IsKeyPressed(KeyboardKey.KEY_EQUAL)) {
+                    _regionDrawValue++;
+                    _regionDrawValue = Math.Min(Enum.GetNames(typeof(RegionType)).Length - 1, _regionDrawValue);
+                }
 
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_CONTROL)) {
                     if (Raylib.IsKeyPressed(KeyboardKey.KEY_ONE)) {
@@ -256,8 +267,8 @@ namespace RaylibGame.Scenes {
                 #endregion
             }
             else {
-                frame++;
-                if (frame >= 90) frame = 0;
+                _frame++;
+                if (_frame >= 90) _frame = 0;
             }
             return ReturnActions.ReturnNull;
         }
@@ -269,11 +280,14 @@ namespace RaylibGame.Scenes {
                     for (int x = 0; x < _width; x++) {
                         Color colour;
                         switch (_inputMap[y * _width + x]) {
-                            case 0:
+                            case (int)RegionType.Ocean:
                                 colour = Color.SKYBLUE;
                                 break;
-                            case 1:
+                            case (int)RegionType.Grassland:
                                 colour = Color.GREEN;
+                                break;
+                            case (int)RegionType.Forest:
+                                colour = Color.DARKGREEN;
                                 break;
                             default:
                                 colour = Color.MAGENTA;
@@ -285,10 +299,25 @@ namespace RaylibGame.Scenes {
                 }
 
                 Raylib.EndMode2D();
+
+                string text = "";
+                switch (_regionDrawValue) {
+                    case (int)RegionType.Ocean:
+                        text = "Ocean";
+                        break;
+                    case (int)RegionType.Grassland:
+                        text = "Grassland";
+                        break;
+                    case (int)RegionType.Forest:
+                        text = "Forest";
+                        break;
+                }
+                
+                Raylib.DrawText(text, 0, Raylib.GetScreenHeight() - 32, 32, Color.WHITE);
             }
             else {
                 string text;
-                switch (frame / 30) {
+                switch (_frame / 30) {
                     case 0:
                         text = "Generating.";
                         break;
@@ -344,12 +373,12 @@ namespace RaylibGame.Scenes {
                         x * _textureScale + random.Next() % _textureScale,
                         y * _textureScale + random.Next() % _textureScale);
 
-                    cellColours[y * _width + x] = _inputMap[y * _width + x] == 1
+                    cellColours[y * _width + x] = _inputMap[y * _width + x] >= 1
                         ? System.Drawing.Color.FromArgb(137, 224, 79)
                         : System.Drawing.Color.FromArgb(79, 174, 224);
 
                     regions.Add(new Region(new List<Vector2>(), 
-                        _inputMap[y * _width + x] == 1 ? RegionType.Grassland : RegionType.Ocean, 
+                        (RegionType)_inputMap[y * _width + x],
                         new Vector2(),
                         $"[REGION NAME {y * _width + x}]"));
                 }

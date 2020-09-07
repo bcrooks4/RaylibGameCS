@@ -30,12 +30,11 @@ namespace RaylibGame.Scenes {
 
             Random random = new Random();
             for (int i = 0; i < Regions.Count; i++) {
-                if (Regions[i].RegionType == RegionType.Ocean)
-                    continue;
-                if (random.Next() % 10 == 0) {
+                if (Regions[i].RegionType == RegionType.Forest) {
                     foreach (var position in Regions[i].RegionLocations) {
-                        if (random.Next() % 32 == 0) 
+                        if (random.Next() % 32 == 0) {
                             _trees.Add(position);
+                        }
                     }
                 }
             }
@@ -143,8 +142,6 @@ namespace RaylibGame.Scenes {
                 Raylib.DrawText(name, x, 10, 32, Color.WHITE);
                 Raylib.DrawLineEx(new Vector2(x, 44), new Vector2(x + Raylib.MeasureText(name, 32), 44), 4f, Color.WHITE);
             }
-
-            
             
             return ReturnActions.ReturnNull;
         }
