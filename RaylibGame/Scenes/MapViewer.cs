@@ -137,10 +137,15 @@ namespace RaylibGame.Scenes {
 
             if (_showRegionInformation && _selectedRegion >= 0) {
                 Raylib.DrawRectangle(0, 0, 400, Raylib.GetScreenHeight(), Color.PURPLE);
-                string name = Regions[_selectedRegion].RegionName;
-                int x = 200 - Raylib.MeasureText(name, 32) / 2;
-                Raylib.DrawText(name, x, 10, 32, Color.WHITE);
-                Raylib.DrawLineEx(new Vector2(x, 44), new Vector2(x + Raylib.MeasureText(name, 32), 44), 4f, Color.WHITE);
+                string text = Regions[_selectedRegion].RegionName;
+                int x = 200 - Raylib.MeasureText(text, 32) / 2;
+                Raylib.DrawText(text, x, 10, 32, Color.WHITE);
+                Raylib.DrawLineEx(new Vector2(x, 44), new Vector2(x + Raylib.MeasureText(text, 32), 44), 4f, Color.WHITE);
+                
+                Raylib.DrawRectangle(20, Raylib.GetScreenHeight() - 60, 360, 40, Color.WHITE);
+                text = "View Region";
+                x = 200 - Raylib.MeasureText(text, 32) / 2;
+                Raylib.DrawText(text, x, Raylib.GetScreenHeight() - 55, 32, Color.BLACK);
             }
             
             return ReturnActions.ReturnNull;
