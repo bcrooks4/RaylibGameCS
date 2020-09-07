@@ -88,8 +88,14 @@ namespace RaylibGame.Scenes {
                     _selectedRegion = _highlightedRegion;
                 }
                 else {
-                    if (Raylib.GetMouseX() > 0 && Raylib.GetMouseX() < 400 && Raylib.GetMouseY() > 0 && Raylib.GetMouseY() < 400) {
-                        
+                    if (Raylib.GetMouseX() > 0 && Raylib.GetMouseX() < 400 && Raylib.GetMouseY() > 0 && Raylib.GetMouseY() < Raylib.GetScreenHeight()) {
+                        Raylib.DrawRectangle(20, Raylib.GetScreenHeight() - 60, 360, 40, Color.WHITE);
+                        if (Raylib.GetMouseX() > 20 &&
+                            Raylib.GetMouseY() > Raylib.GetScreenHeight() - 60 &&
+                            Raylib.GetMouseX() < 380 &&
+                            Raylib.GetMouseY() < Raylib.GetScreenHeight() - 20) {
+                            Console.WriteLine("Button clicked!");
+                        }
                     }
                     else {
                         _showRegionInformation = false;
