@@ -32,7 +32,7 @@ namespace RaylibGame.Scenes {
             _height = 16;
             _mapScale = 32;
             _inputMap = new int[_width * _height];
-            _textureScale = 16;
+            _textureScale = 64;
 
             _camera = new Camera2D {zoom = 1};
 
@@ -361,12 +361,14 @@ namespace RaylibGame.Scenes {
 
             Random random = new Random();
             Bitmap bitmap = new Bitmap(_width * _textureScale, _height * _textureScale);
-
+            
             Vector2[] cellPositions = new Vector2[_width * _height];
             System.Drawing.Color[] cellColours = new System.Drawing.Color[_width * _height];
 
             List<Region> regions = new List<Region>();
 
+            DateTime time1 = DateTime.Now;
+            
             for (int y = 0; y < _height; y++) {
                 for (int x = 0; x < _width; x++) {
                     cellPositions[y * _width + x] = new Vector2(
@@ -410,6 +412,11 @@ namespace RaylibGame.Scenes {
             MapViewer mapViewer = new MapViewer();
             mapViewer.Regions = regions;
 
+            DateTime time2 = DateTime.Now;
+            
+            Console.WriteLine($"Time difference: {time2.Subtract(time1)}");
+
+            
             Game.ChangeScene(mapViewer);
         }
     }

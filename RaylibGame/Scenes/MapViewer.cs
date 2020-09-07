@@ -32,7 +32,7 @@ namespace RaylibGame.Scenes {
             for (int i = 0; i < Regions.Count; i++) {
                 if (Regions[i].RegionType == RegionType.Forest) {
                     foreach (var position in Regions[i].RegionLocations) {
-                        if (random.Next() % 32 == 0) {
+                        if (random.Next() % 128 == 0) {
                             _trees.Add(position);
                         }
                     }
@@ -94,7 +94,8 @@ namespace RaylibGame.Scenes {
                             Raylib.GetMouseY() > Raylib.GetScreenHeight() - 60 &&
                             Raylib.GetMouseX() < 380 &&
                             Raylib.GetMouseY() < Raylib.GetScreenHeight() - 20) {
-                            Console.WriteLine("Button clicked!");
+                            RegionViewer regionViewer = new RegionViewer(32, 32, Regions[_selectedRegion].RegionType, this);
+                            Game.ChangeScene(regionViewer);
                         }
                     }
                     else {
@@ -130,13 +131,24 @@ namespace RaylibGame.Scenes {
 
             if (_highlightedRegion >= 0) {
                 foreach (var coordinate in Regions[_highlightedRegion].RegionLocations) {
-                    Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
+                    //Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
                                                                 // not what I intended but still cool
                     Raylib.DrawRectangle((int)coordinate.X, 
                         (int)coordinate.Y, 
                         1, 
                         1, 
-                        Raylib.Fade(Color.WHITE, 0.3f));
+                        Raylib.Fade(Color.WHITE, 0.25f));
+                }
+            }
+            if (_selectedRegion >= 0) {
+                foreach (var coordinate in Regions[_selectedRegion].RegionLocations) {
+                    //Raylib.DrawPixelV(coordinate, Color.WHITE); // No fucking clue why this looks so cool,
+                    // not what I intended but still cool
+                    Raylib.DrawRectangle((int)coordinate.X, 
+                        (int)coordinate.Y, 
+                        1, 
+                        1, 
+                        Raylib.Fade(Color.WHITE, 0.35f));
                 }
             }
             Raylib.EndMode2D();
